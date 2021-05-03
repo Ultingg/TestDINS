@@ -6,14 +6,14 @@ import ru.isaykin.app.entities.Note;
 import ru.isaykin.app.entities.Person;
 import ru.isaykin.app.exceptions.NoteNotFoundException;
 import ru.isaykin.app.exceptions.PersonNotFoundException;
-import ru.isaykin.app.mappers.NoteMapper;
 import ru.isaykin.app.repositories.NotesRepository;
 import ru.isaykin.app.repositories.PersonsRepository;
 
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.isaykin.app.mappers.NoteMapper.*;
+import static ru.isaykin.app.mappers.NoteMapper.INSTANCE;
 
 @Service
 public class NotesService {
@@ -54,6 +54,15 @@ public class NotesService {
         return noteDTOList;
     }
 
+    public NoteDTO getNoteFromPersonBookByTelephoneNumber(Long personId, String telephoneNumber) {
+        List<NoteDTO> noteDTOList = getListOfNoteDTOById(personId);
+        String telephone = addPlusToTelephoneNumber(telephoneNumber);
+        NoteDTO noteDTO = noteDTOList.stream()
+                .filter(noteDTO1 -> noteDTO1.getTelephoneNumber().equals(telephone))
+                .findAny().orElseThrow(()->new NoteNotFoundException("Note not found. Wrong id."));
+        return noteDTO;
+    }
+
     public NoteDTO addNoteToPersonById(Long personId, NoteDTO noteDTO) {
         Person person = personsRepository
                 .findById(personId)
@@ -90,21 +99,24 @@ public class NotesService {
         if (notesRepository.existsById(noteId)) result = 0L;
         return result;
     }
+
     private NoteDTO getNoteDTOByPersonBookNoteId(Long personId, Long noteDTOId) {
         List<NoteDTO> noteDTOList = getListOfNoteDTOById(personId);
         if (noteDTOList.size() < noteDTOId) throw new NoteNotFoundException("Note not found. Wrong id.");
         return noteDTOList.get(noteDTOId.intValue() - 1);
     }
+
     public NoteDTO updateNoteInPersonBook(Long personId, Long noteDTOId, String contactName, String telephoneNumber) {
         NoteDTO noteDTO = getNoteDTOByPersonBookNoteId(personId, noteDTOId);
 
         Note noteToUpdate = notesRepository.findByTelephoneNumber(noteDTO.getTelephoneNumber())
                 .orElseThrow(() -> new NoteNotFoundException("Note not found. Wrong id."));
 
-        if(contactName != null) noteToUpdate.setContactName(contactName);
-        if(telephoneNumber !=null) {
-            telephoneNumber = addPluToTelephoneNumber(telephoneNumber);
-            noteToUpdate.setTelephoneNumber(telephoneNumber);}
+        if (contactName != null) noteToUpdate.setContactName(contactName);
+        if (telephoneNumber != null) {
+            telephoneNumber = addPlusToTelephoneNumber(telephoneNumber);
+            noteToUpdate.setTelephoneNumber(telephoneNumber);
+        }
         noteToUpdate = notesRepository.save(noteToUpdate);
 
         noteDTO = INSTANCE.fromNoteToNoteDTO(noteToUpdate);
@@ -112,7 +124,7 @@ public class NotesService {
         return noteDTO;
     }
 
-    private String addPluToTelephoneNumber(String telephoneNumber) {
-      return telephoneNumber.replace(" ", "+");
+    private String addPlusToTelephoneNumber(String telephoneNumber) {
+        return telephoneNumber.replace(" ", "+");
     }
 }

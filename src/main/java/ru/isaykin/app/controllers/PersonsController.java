@@ -3,7 +3,6 @@ package ru.isaykin.app.controllers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.isaykin.app.DTO.PersonDTO;
-import ru.isaykin.app.repositories.PersonsRepository;
 import ru.isaykin.app.services.PersonsService;
 
 import javax.validation.Valid;
@@ -32,6 +31,13 @@ public class PersonsController {
         return new ResponseEntity<>(personDTOList, OK);
     }
 
+    @GetMapping("person")
+    public ResponseEntity<PersonDTO> getPersonByName(@RequestParam String firstName) {
+        PersonDTO personResult = personsService.getByName(firstName);
+        return new ResponseEntity<>(personResult, OK);
+
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<PersonDTO> getPersonById(@PathVariable Long id) {
         PersonDTO personResult = personsService.getById(id);
@@ -55,10 +61,10 @@ public class PersonsController {
 
     @PatchMapping("{id}")
     public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id,
-                                                  @RequestBody PersonDTO personDTO) {
+                                                  @Valid @RequestBody PersonDTO personDTO) {
 
-        PersonDTO UpdatedPersonDTO = personsService.updateById(id, personDTO );
-        return  new ResponseEntity<>(UpdatedPersonDTO, OK);
+        PersonDTO UpdatedPersonDTO = personsService.updateById(id, personDTO);
+        return new ResponseEntity<>(UpdatedPersonDTO, OK);
     }
 
 

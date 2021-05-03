@@ -5,12 +5,13 @@ import ru.isaykin.app.DTO.PersonDTO;
 import ru.isaykin.app.entities.Person;
 import ru.isaykin.app.entities.TelephoneBook;
 import ru.isaykin.app.exceptions.PersonNotFoundException;
-import ru.isaykin.app.mappers.PersonMapper;
 import ru.isaykin.app.repositories.PersonsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ru.isaykin.app.mappers.PersonMapper.INSTANCE;
 
 @Service
 public class PersonsService {
@@ -23,10 +24,10 @@ public class PersonsService {
 
 
     public PersonDTO addPerson(PersonDTO personDTO) {
-        Person person = PersonMapper.INSTANCE.fromPersonDTOToPerson(personDTO);
+        Person person = INSTANCE.fromPersonDTOToPerson(personDTO);
         person.setTelephoneBook(new TelephoneBook());
         person = personsRepository.save(person);
-        personDTO = PersonMapper.INSTANCE.fromPersonToPersonDTO(person);
+        personDTO = INSTANCE.fromPersonToPersonDTO(person);
         return personDTO;
     }
 
@@ -34,7 +35,7 @@ public class PersonsService {
         Person person = personsRepository
                 .findById(id)
                 .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
-        PersonDTO result = PersonMapper.INSTANCE.fromPersonToPersonDTO(person);
+        PersonDTO result = INSTANCE.fromPersonToPersonDTO(person);
         return result;
     }
 
@@ -43,7 +44,7 @@ public class PersonsService {
         personsRepository.findAll().iterator().forEachRemaining(personList::add);
         List<PersonDTO> personDTOList = personList
                 .stream()
-                .map(PersonMapper.INSTANCE::fromPersonToPersonDTO)
+                .map(INSTANCE::fromPersonToPersonDTO)
                 .collect(Collectors.toList());
         return personDTOList;
     }
@@ -65,10 +66,16 @@ public class PersonsService {
         if (personDTO.getFirstName() != null) person.setFirstName(personDTO.getFirstName());
         if (personDTO.getLastName() != null) person.setLastName(personDTO.getLastName());
         person = personsRepository.save(person);
-        PersonDTO result = PersonMapper.INSTANCE.fromPersonToPersonDTO(person);
+        PersonDTO result = INSTANCE.fromPersonToPersonDTO(person);
         return result;
 
 
     }
 
+    public PersonDTO getByName(String firstName) {
+        Person person = personsRepository.findByFirstName(firstName)
+                .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
+        PersonDTO personDTO = INSTANCE.fromPersonToPersonDTO(person);
+        return personDTO;
+    }
 }

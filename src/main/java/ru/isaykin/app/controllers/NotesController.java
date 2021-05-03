@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.isaykin.app.DTO.NoteDTO;
 import ru.isaykin.app.services.NotesService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -19,26 +20,41 @@ public class NotesController {
         this.notesService = notesService;
     }
 
-
-    @GetMapping("{id}/notes/{note_id}")
-    public ResponseEntity<NoteDTO> getById(@PathVariable Long id,
-                                           @PathVariable Long note_id) {
-
-        NoteDTO result = notesService.getNoteById(id, note_id);
+    @GetMapping("{personId}/notes/{noteId}")
+    public ResponseEntity<NoteDTO> getByIdInPersonBook(@PathVariable Long personId,
+                                                       @PathVariable Long noteId) {
+        NoteDTO result = notesService.getNoteById(personId, noteId);
         return new ResponseEntity<>(result, OK);
     }
 
-    @GetMapping("{id}/notes")
-    public ResponseEntity<List<NoteDTO>> getListOfNotesById(@PathVariable Long id) {
-        List<NoteDTO> resultList = notesService.getListOfNoteDTOById(id);
+    @GetMapping("{personId}/notes")
+    public ResponseEntity<List<NoteDTO>> getListOfNotesByIdOfPerson(@PathVariable Long personId) {
+        List<NoteDTO> resultList = notesService.getListOfNoteDTOById(personId);
         return new ResponseEntity<>(resultList, OK);
     }
 
-    @PostMapping("{id}/notes")
-    public ResponseEntity<NoteDTO> addNoteToPersonBook(@PathVariable Long id,
-                                                       @RequestBody NoteDTO noteDTO) {
-        NoteDTO resultNoteDTO = notesService.addNoteToPersonById(id, noteDTO);
+    @GetMapping("{personId}/notes/note")
+    public ResponseEntity<NoteDTO> getNoteByTelephoneNumberInPersonBook(@PathVariable Long personId,
+                                                                        @RequestParam String telephoneNumber) {
+        NoteDTO noteDTO = notesService.getNoteFromPersonBookByTelephoneNumber(personId, telephoneNumber);
+        return new ResponseEntity<>(noteDTO, OK);
+    }
+
+    @PostMapping("{personId}/notes")
+    public ResponseEntity<NoteDTO> addNoteToPersonBook(@PathVariable Long personId,
+                                                       @Valid @RequestBody NoteDTO noteDTO) {
+        NoteDTO resultNoteDTO = notesService.addNoteToPersonById(personId, noteDTO);
         return new ResponseEntity<>(resultNoteDTO, CREATED);
+    }
+
+    @PatchMapping("{personId}/notes/{noteId}")
+    public ResponseEntity<NoteDTO> updateNoteInPersonBook(@PathVariable Long personId,
+                                                          @PathVariable Long noteId,
+                                                          @Valid @RequestBody NoteDTO noteDTO) {
+        NoteDTO updatedNoteDTO = notesService.updateNoteInPersonBook(
+                personId, noteId, noteDTO.getContactName(), noteDTO.getTelephoneNumber());
+
+        return new ResponseEntity<>(updatedNoteDTO, OK);
     }
 
     @DeleteMapping("{personId}/notes/{noteId}")
@@ -56,15 +72,4 @@ public class NotesController {
         }
         return result;
     }
-
-    @PatchMapping("{personId}/notes/{noteId}")
-    public ResponseEntity<NoteDTO> updateNoteInPersonBook(@PathVariable Long personId,
-                                                          @PathVariable Long noteId,
-                                                          @RequestBody NoteDTO noteDTO) {
-        NoteDTO updatedNoteDTO = notesService.updateNoteInPersonBook(
-                personId, noteId, noteDTO.getContactName(), noteDTO.getTelephoneNumber());
-
-        return new ResponseEntity<>(updatedNoteDTO, OK);
-    }
-
 }
