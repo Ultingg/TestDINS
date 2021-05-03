@@ -35,10 +35,27 @@ public class NotesController {
         return new ResponseEntity<>(resultList, OK);
     }
 
-    @PostMapping("{id}/notes/")
-    public ResponseEntity<NoteDTO> addNoteToPerson(@PathVariable Long id,
+    @PostMapping("{id}/notes")
+    public ResponseEntity<NoteDTO> addNoteToPersonBook(@PathVariable Long id,
                                                    @RequestBody NoteDTO noteDTO) {
     NoteDTO resultNoteDTO = notesService.addNoteToPersonById(id,noteDTO);
     return new ResponseEntity<>(resultNoteDTO, CREATED);
+    }
+
+    @DeleteMapping("{personId}/notes/{noteId}")
+    public ResponseEntity<StringBuilder> deleteNoteFromPersonBook (@PathVariable Long personId,
+                                                                   @PathVariable Long noteId) {
+        ResponseEntity<StringBuilder> result;
+        StringBuilder response = new StringBuilder();
+        Long resultLong = notesService.deleteNoteById(personId, noteId);
+        if(resultLong == 0L) {
+            response.append("Person wasn't deleted. Repeat request, please.");
+            result = new ResponseEntity<>(response, BAD_REQUEST);
+        } else {
+            response.append("Note id = " + noteId + " was deleted from Person's telephone book.");
+            result = new ResponseEntity<>(response, OK);
+        }
+
+    return result;
     }
 }

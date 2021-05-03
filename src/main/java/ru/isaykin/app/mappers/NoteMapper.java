@@ -14,13 +14,13 @@ public interface NoteMapper {
 
 
     @Mappings({
-        //    @Mapping(source = "noteDTO.id", target = "noteId"),
+            @Mapping(source = "noteDTO.id", target = "noteId"),
             @Mapping(source = "noteDTO.contactName", target = "contactName"),
             @Mapping(source = "noteDTO.telephoneNumber", target = "telephoneNumber")})
     Note fromNoteDTOToNote(NoteDTO noteDTO);
 
     @Mappings({
-            //@Mapping(source = "note.noteId", target = "id"),
+            @Mapping(source = "note.noteId", target = "id"),
             @Mapping(source = "note.contactName", target = "contactName"),
             @Mapping(source = "note.telephoneNumber", target = "telephoneNumber")})
     NoteDTO fromNoteToNoteDTO(Note note);

@@ -45,7 +45,7 @@ public class PersonsController {
         Long resultLong = personsService.deleteById(id);
         if (resultLong == 0L) {
             response.append("Person wasn't deleted. Repeat request, please.");
-            result = new ResponseEntity<>(response, NOT_FOUND);
+            result = new ResponseEntity<>(response, BAD_REQUEST);
         } else {
             response.append("Person id = ").append(resultLong).append(" was deleted.");
             result = new ResponseEntity<>(response, OK);
