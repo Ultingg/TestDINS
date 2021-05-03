@@ -45,7 +45,11 @@ public class MapperTests {
     }
     @Test
     void fromNoteDTOToNote() {
-        NoteDTO noteDTO = new NoteDTO("Nikita", "+74959874561");
+        NoteDTO noteDTO = NoteDTO.builder()
+                .contactName("Nikita")
+                .telephoneNumber("+74959874561")
+                .build();
+
 
         Note note = NoteMapper.INSTANCE.fromNoteDTOToNote(noteDTO);
 

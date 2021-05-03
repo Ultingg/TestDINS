@@ -55,10 +55,10 @@ public class PersonsController {
 
     @PatchMapping("{id}")
     public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id,
-                                                  @RequestParam String firstName,
-                                                  @RequestParam String lastName) {
-        PersonDTO personDTO = personsService.updateById(id, firstName, lastName);
-        return  new ResponseEntity<>(personDTO, OK);
+                                                  @RequestBody PersonDTO personDTO) {
+
+        PersonDTO UpdatedPersonDTO = personsService.updateById(id, personDTO );
+        return  new ResponseEntity<>(UpdatedPersonDTO, OK);
     }
 
 

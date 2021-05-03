@@ -100,9 +100,11 @@ public class NotesService {
 
         Note noteToUpdate = notesRepository.findByTelephoneNumber(noteDTO.getTelephoneNumber())
                 .orElseThrow(() -> new NoteNotFoundException("Note not found. Wrong id."));
-        telephoneNumber = addPluToTelephoneNumber(telephoneNumber);
+
         if(contactName != null) noteToUpdate.setContactName(contactName);
-        if(telephoneNumber !=null) noteToUpdate.setTelephoneNumber(telephoneNumber);
+        if(telephoneNumber !=null) {
+            telephoneNumber = addPluToTelephoneNumber(telephoneNumber);
+            noteToUpdate.setTelephoneNumber(telephoneNumber);}
         noteToUpdate = notesRepository.save(noteToUpdate);
 
         noteDTO = INSTANCE.fromNoteToNoteDTO(noteToUpdate);

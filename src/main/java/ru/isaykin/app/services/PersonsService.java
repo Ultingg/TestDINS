@@ -58,12 +58,13 @@ public class PersonsService {
         return result;
     }
 
-    public PersonDTO updateById(Long id, String firstName, String lastName) {
+    public PersonDTO updateById(Long id, PersonDTO personDTO) {
         Person person = personsRepository
                 .findById(id)
                 .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
-        person.setFirstName(firstName);
-        person.setLastName(lastName);
+        if (personDTO.getFirstName() != null) person.setFirstName(personDTO.getFirstName());
+        if (personDTO.getLastName() != null) person.setLastName(personDTO.getLastName());
+        person = personsRepository.save(person);
         PersonDTO result = PersonMapper.INSTANCE.fromPersonToPersonDTO(person);
         return result;
 

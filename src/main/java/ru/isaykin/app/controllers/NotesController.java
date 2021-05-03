@@ -19,6 +19,7 @@ public class NotesController {
         this.notesService = notesService;
     }
 
+
     @GetMapping("{id}/notes/{note_id}")
     public ResponseEntity<NoteDTO> getById(@PathVariable Long id,
                                            @PathVariable Long note_id) {
@@ -59,11 +60,11 @@ public class NotesController {
     @PatchMapping("{personId}/notes/{noteId}")
     public ResponseEntity<NoteDTO> updateNoteInPersonBook(@PathVariable Long personId,
                                                           @PathVariable Long noteId,
-                                                          @RequestParam String contactName,
-                                                          @RequestParam String telephoneNumber) {
+                                                          @RequestBody NoteDTO noteDTO) {
         NoteDTO updatedNoteDTO = notesService.updateNoteInPersonBook(
-                personId, noteId, contactName, telephoneNumber);
+                personId, noteId, noteDTO.getContactName(), noteDTO.getTelephoneNumber());
 
         return new ResponseEntity<>(updatedNoteDTO, OK);
     }
+
 }

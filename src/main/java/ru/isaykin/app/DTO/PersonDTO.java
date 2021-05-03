@@ -1,12 +1,15 @@
 package ru.isaykin.app.DTO;
 
 
+import jdk.jfr.Category;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
+@Component
 public class PersonDTO {
 
 
