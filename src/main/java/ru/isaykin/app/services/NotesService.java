@@ -100,11 +100,17 @@ public class NotesService {
 
         Note noteToUpdate = notesRepository.findByTelephoneNumber(noteDTO.getTelephoneNumber())
                 .orElseThrow(() -> new NoteNotFoundException("Note not found. Wrong id."));
+        telephoneNumber = addPluToTelephoneNumber(telephoneNumber);
         if(contactName != null) noteToUpdate.setContactName(contactName);
         if(telephoneNumber !=null) noteToUpdate.setTelephoneNumber(telephoneNumber);
         noteToUpdate = notesRepository.save(noteToUpdate);
 
         noteDTO = INSTANCE.fromNoteToNoteDTO(noteToUpdate);
+        noteDTO.setId(noteDTOId);
         return noteDTO;
+    }
+
+    private String addPluToTelephoneNumber(String telephoneNumber) {
+      return telephoneNumber.replace(" ", "+");
     }
 }
