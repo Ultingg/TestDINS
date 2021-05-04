@@ -1,30 +1,31 @@
-use dins;
-drop table if exists notes;
-drop table if exists telephone_books;
-drop table if exists persons;
+CREATE DATABASE IF NOT EXISTS dins;
+USE dins;
+DROP TABLE IF EXISTS notes;
+DROP TABLE IF EXISTS  telephone_books;
+DROP TABLE IF EXISTS  persons;
 
 
-create table persons
+CREATE TABLE persons
 (
-    person_id  integer auto_increment primary key,
-    first_name varchar(100),
-    last_name  varchar(100)
+    person_id  INTEGER AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100),
+    last_name  VARCHAR(100)
 );
 
-create table telephone_books
+CREATE TABLE  telephone_books
 (
-    telephone_book_id integer auto_increment primary key,
-    person_id         integer not null,
-    foreign key (person_id) references persons (person_id)
+    telephone_book_id INTEGER AUTO_INCREMENT PRIMARY key,
+    person_id         INTEGER NOT NULL,
+    FOREIGN KEY (person_id) REFERENCES persons (person_id)
 );
 
-create table notes
+CREATE TABLE  notes
 (
-    note_id           serial auto_increment primary key,
-    telephone_book_id integer not null,
-    contact_name      varchar(100),
-    telephone_number  varchar(12) unique,
-    foreign key (telephone_book_id) references telephone_books (telephone_book_id)
+    note_id           SERIAL AUTO_INCREMENT PRIMARY key,
+    telephone_book_id INTEGER NOT NULL,
+    contact_name      VARCHAR(100),
+    telephone_number  VARCHAR(12) UNIQUE ,
+    FOREIGN KEY (telephone_book_id) REFERENCES telephone_books (telephone_book_id)
 );
 
 
