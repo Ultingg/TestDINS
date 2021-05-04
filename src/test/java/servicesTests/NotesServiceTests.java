@@ -15,7 +15,6 @@ import ru.isaykin.app.services.NotesService;
 
 import java.util.*;
 
-import static java.util.Optional.*;
 import static java.util.Optional.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -218,29 +217,29 @@ public class NotesServiceTests {
         Person personFromDB = new Person("Adam", "+00000000001", new TelephoneBook(getSetOfNotes()));
         when(personsRepository.findById(1L)).thenReturn(of(personFromDB));
 
-        assertThrows(NoteNotFoundException.class, ()-> notesService.deleteNoteByIdFromPersonBook(1L,4L));
+        assertThrows(NoteNotFoundException.class, () -> notesService.deleteNoteByIdFromPersonBook(1L, 4L));
 
-        verify(personsRepository,times(1)).findById(1L);
-        verify(personsRepository,times(1)).findById(anyLong());
-        verify(notesRepository,times(0)).delete(any(Note.class));
+        verify(personsRepository, times(1)).findById(1L);
+        verify(personsRepository, times(1)).findById(anyLong());
+        verify(notesRepository, times(0)).delete(any(Note.class));
     }
 
 
     @Test
     public void updateNoteInPersonBook_valid_NoteDTO() {
         Person personFromDB = new Person("Adam", "+00000000001", new TelephoneBook(getSetOfNotes()));
-        Note oldNote = new Note( "Snake", "+00000000009");
-        Note newNote = new Note( "Snake with apple", "+00000000099");
+        Note oldNote = new Note("Snake", "+00000000009");
+        Note newNote = new Note("Snake with apple", "+00000000099");
         NoteDTO expectedNoteDTO = new NoteDTO(2L, "Snake with apple", "+00000000099");
         when(personsRepository.findById(1L)).thenReturn(of(personFromDB));
         when(notesRepository.findByTelephoneNumber("+00000000009")).thenReturn(of(oldNote));
         when(notesRepository.save(any(Note.class))).thenReturn(newNote);
 
-        NoteDTO actual = notesService.updateNoteInPersonBook(1L,2L,"Snake with apple","+00000000099");
+        NoteDTO actual = notesService.updateNoteInPersonBook(1L, 2L, "Snake with apple", "+00000000099");
 
-        assertEquals(expectedNoteDTO,actual);
-        verify(personsRepository,times(1)).findById(1L);
-        verify(personsRepository,times(1)).findById(anyLong());
+        assertEquals(expectedNoteDTO, actual);
+        verify(personsRepository, times(1)).findById(1L);
+        verify(personsRepository, times(1)).findById(anyLong());
         verify(notesRepository, times(1)).findByTelephoneNumber(anyString());
         verify(notesRepository, times(1)).findByTelephoneNumber("+00000000009");
         verify(notesRepository, times(1)).save(any(Note.class));
@@ -249,35 +248,37 @@ public class NotesServiceTests {
     @Test
     public void updateNoteInPersonBook_nullPersonId_PersonNotFoundException() {
 
-        assertThrows(PersonNotFoundException.class, ()->notesService.updateNoteInPersonBook(null,1L,"name", "+00000000009"));
+        assertThrows(PersonNotFoundException.class, () -> notesService.updateNoteInPersonBook(null, 1L, "name", "+00000000009"));
 
-        verify(personsRepository,times(1)).findById(null);
-        verify(personsRepository,times(1)).findById(any());
+        verify(personsRepository, times(1)).findById(null);
+        verify(personsRepository, times(1)).findById(any());
     }
+
     @Test
     public void updateNoteInPersonBook_nullNoteId_NoteNotFoundException() {
         Person personFromDB = new Person("Adam", "+00000000001", new TelephoneBook(getSetOfNotes()));
         when(personsRepository.findById(1L)).thenReturn(of(personFromDB));
 
-        assertThrows(NoteNotFoundException.class, ()->notesService.updateNoteInPersonBook(1L,null,"name", "+00000000009"));
+        assertThrows(NoteNotFoundException.class, () -> notesService.updateNoteInPersonBook(1L, null, "name", "+00000000009"));
 
-        verify(personsRepository,times(1)).findById(1L);
-        verify(personsRepository,times(1)).findById(anyLong());
+        verify(personsRepository, times(1)).findById(1L);
+        verify(personsRepository, times(1)).findById(anyLong());
     }
+
     @Test
     public void updateNoteInPersonBook_nullNameAndTelephone_NoteDTO() {
         Person personFromDB = new Person("Adam", "+00000000001", new TelephoneBook(getSetOfNotes()));
-        Note oldNote = new Note( "Snake", "+00000000009");
+        Note oldNote = new Note("Snake", "+00000000009");
         NoteDTO expectedNoteDTO = new NoteDTO(2L, "Snake", "+00000000009");
         when(personsRepository.findById(1L)).thenReturn(of(personFromDB));
         when(notesRepository.findByTelephoneNumber("+00000000009")).thenReturn(of(oldNote));
         when(notesRepository.save(any(Note.class))).thenReturn(oldNote);
 
-        NoteDTO actual = notesService.updateNoteInPersonBook(1L,2L,null,null);
+        NoteDTO actual = notesService.updateNoteInPersonBook(1L, 2L, null, null);
 
-        assertEquals(expectedNoteDTO,actual);
-        verify(personsRepository,times(1)).findById(1L);
-        verify(personsRepository,times(1)).findById(anyLong());
+        assertEquals(expectedNoteDTO, actual);
+        verify(personsRepository, times(1)).findById(1L);
+        verify(personsRepository, times(1)).findById(anyLong());
         verify(notesRepository, times(1)).findByTelephoneNumber(anyString());
         verify(notesRepository, times(1)).findByTelephoneNumber("+00000000009");
         verify(notesRepository, times(1)).save(any(Note.class));

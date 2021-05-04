@@ -6,15 +6,17 @@ import org.junit.jupiter.api.Test;
 import ru.isaykin.app.dto.PersonDTO;
 import ru.isaykin.app.entities.Person;
 import ru.isaykin.app.entities.TelephoneBook;
-import ru.isaykin.app.exceptions.InvalidNoteException;
 import ru.isaykin.app.exceptions.InvalidPersonException;
 import ru.isaykin.app.exceptions.PersonNotFoundException;
 import ru.isaykin.app.repositories.PersonsRepository;
 import ru.isaykin.app.services.PersonsService;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static java.util.Optional.*;
+import static java.util.Optional.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -43,12 +45,11 @@ public class PersonsServiceTests {
 
         PersonDTO actual = personsService.addPerson(personDTO);
 
-        assertEquals("Adam", actual.getFirstName(),"Actual firstName unequals to expected firstName.");
+        assertEquals("Adam", actual.getFirstName(), "Actual firstName unequals to expected firstName.");
         assertEquals("Man", actual.getLastName(), "Actual lastName unequals to expected lastName");
         assertEquals(1L, actual.getId(), "Actual id unequals to expected id");
         verify(personsRepository, times(1)).save(any(Person.class));
     }
-
 
 
     @Test
@@ -65,13 +66,15 @@ public class PersonsServiceTests {
         verify(personsRepository, times(1)).findById(1L);
         verify(personsRepository, times(1)).findById(anyLong());
     }
+
     @Test
 
-    public void getPersonById_invalidId_PersonNotFoundException(){
-        assertThrows(PersonNotFoundException.class, () ->personsService.getPersonById(1L));
+    public void getPersonById_invalidId_PersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> personsService.getPersonById(1L));
         verify(personsRepository, times(1)).findById(1L);
         verify(personsRepository, times(1)).findById(anyLong());
     }
+
     @Test
     public void getList_valid_ListOfPersons() {
         Person person1 = new Person("Adam", "Man", new TelephoneBook());
@@ -113,8 +116,9 @@ public class PersonsServiceTests {
         verify(personsRepository, times(1)).findById(1L);
         verify(personsRepository, times(1)).findById(anyLong());
     }
+
     @Test
-    public void deletePersonByID_invalidId_PersonNotFoundException(){
+    public void deletePersonByID_invalidId_PersonNotFoundException() {
         assertThrows(PersonNotFoundException.class, () -> personsService.deletePersonById(1L));
         verify(personsRepository, times(0)).deleteById(1L);
         verify(personsRepository, times(0)).deleteById(anyLong());
@@ -143,7 +147,7 @@ public class PersonsServiceTests {
     }
 
     @Test
-    public void updatePersonById_invalidId_PersonNotFoundException(){
+    public void updatePersonById_invalidId_PersonNotFoundException() {
         PersonDTO personDTOExpected = new PersonDTO();
         personDTOExpected.setFirstName("Adam");
         personDTOExpected.setLastName("First Man");
@@ -156,8 +160,9 @@ public class PersonsServiceTests {
         verify(personsRepository, times(1)).findById(anyLong());
         verify(personsRepository, times(0)).save(any(Person.class));
     }
+
     @Test
-    public void updatePersonById_invalidId_InvalidPersonException(){
+    public void updatePersonById_invalidId_InvalidPersonException() {
         Person personFromDB = new Person("Adam", "Man", new TelephoneBook());
         personFromDB.setPersonId(1L);
         Person savedPersonFromDB = new Person("Adam", "First Man", new TelephoneBook());
@@ -184,8 +189,9 @@ public class PersonsServiceTests {
         verify(personsRepository, times(1)).findByFirstName("Eve");
         verify(personsRepository, times(1)).findByFirstName(anyString());
     }
+
     @Test
-    public void getPersonByName_invalidId_PersonNotFoundException(){
+    public void getPersonByName_invalidId_PersonNotFoundException() {
         assertThrows(PersonNotFoundException.class, () -> personsService.getPersonByName("Some name"));
         assertThrows(PersonNotFoundException.class, () -> personsService.getPersonByName(null));
         verify(personsRepository, times(1)).findByFirstName("Some name");

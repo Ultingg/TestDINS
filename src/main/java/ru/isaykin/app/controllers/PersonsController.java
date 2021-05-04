@@ -9,7 +9,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("persons")
@@ -46,9 +47,9 @@ public class PersonsController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Map<String,Object>> deletePersonById(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> deletePersonById(@PathVariable Long id) {
         Map<String, Object> resultMap = personsService.deletePersonById(id);
-        return new ResponseEntity<>(resultMap,OK);
+        return new ResponseEntity<>(resultMap, OK);
     }
 
     @PutMapping("{id}")

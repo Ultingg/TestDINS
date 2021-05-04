@@ -16,7 +16,7 @@ public class MapperTests {
 
     @Test
     void fromPersonToPersonDTO() {
-        Person person = new Person("Adam","Man", new TelephoneBook(Set.of()));
+        Person person = new Person("Adam", "Man", new TelephoneBook(Set.of()));
 
         PersonDTO personDTO = PersonMapper.INSTANCE.fromPersonToPersonDTO(person);
 
@@ -35,6 +35,7 @@ public class MapperTests {
         assertEquals("Eve", person.getFirstName());
         assertEquals("Woman", person.getLastName());
     }
+
     @Test
     void fromNoteToNoteDTO() {
         Note note = new Note("Iosif", "+74951234567");
@@ -44,6 +45,7 @@ public class MapperTests {
         assertEquals("Iosif", noteDTO.getContactName());
         assertEquals("+74951234567", noteDTO.getTelephoneNumber());
     }
+
     @Test
     void fromNoteDTOToNote() {
         NoteDTO noteDTO = NoteDTO.builder()
@@ -55,7 +57,7 @@ public class MapperTests {
         Note note = NoteMapper.INSTANCE.fromNoteDTOToNote(noteDTO);
 
         assertEquals("Nikita", note.getContactName());
-        assertEquals("+74959874561",note.getTelephoneNumber());
+        assertEquals("+74959874561", note.getTelephoneNumber());
     }
 
 }

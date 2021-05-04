@@ -27,18 +27,17 @@ public class PersonBookRelationTest {
         Note noteB = new Note("Boris", "+7125622587");
         TelephoneBook telephoneBook = new TelephoneBook(of(note, noteK, noteB));
 
-        Person pepe = new Person("Pepe","Rimlyanin", telephoneBook);
+        Person pepe = new Person("Pepe", "Rimlyanin", telephoneBook);
 
         personsRepository.save(pepe);
 
-        Person pers  = personsRepository.findById(1L).orElseThrow();
+        Person pers = personsRepository.findById(1L).orElseThrow();
 
         System.out.println("============");
 
         var notes = pers.getTelephoneBook().getNotes();
 
-        for(Note n : notes) System.out.println("====" + n);
-
+        for (Note n : notes) System.out.println("====" + n);
 
 
     }

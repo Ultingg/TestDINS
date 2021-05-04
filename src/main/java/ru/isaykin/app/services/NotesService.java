@@ -1,6 +1,5 @@
 package ru.isaykin.app.services;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Service;
 import ru.isaykin.app.dto.NoteDTO;
 import ru.isaykin.app.entities.Note;
