@@ -1,0 +1,408 @@
+{
+	"info": {
+		"_postman_id": "f62087d5-b573-4326-8b4f-a0273483bb85",
+		"name": "DINSTestCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET note 1 from TelBook of Person 3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/3/notes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"3",
+						"notes",
+						"1"
+					]
+				},
+				"description": "Получить запись 1 у пользователя 3"
+			},
+			"response": []
+		},
+		{
+			"name": "GET notes from TelBook of Person 3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/3/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"3",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET note 1 from TelBook of Person 3 by phoneNumber",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/3/notes/note?telephoneNumber=+19213659845",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"3",
+						"notes",
+						"note"
+					],
+					"query": [
+						{
+							"key": "telephoneNumber",
+							"value": "+19213659845"
+						}
+					]
+				},
+				"description": "Получить запись в телефонной книжке пользователя 3 по номеру телефона"
+			},
+			"response": []
+		},
+		{
+			"name": "GET  all Persons",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						""
+					]
+				},
+				"description": "Получить список всех пользователей"
+			},
+			"response": []
+		},
+		{
+			"name": "GET  Person 2 by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"2"
+					]
+				},
+				"description": "Получить польщователя 2 по id"
+			},
+			"response": []
+		},
+		{
+			"name": "GET  Person by name",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/person?firstName=Nick",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"person"
+					],
+					"query": [
+						{
+							"key": "firstName",
+							"value": "Nick"
+						}
+					]
+				},
+				"description": "Получить пользователя по имени"
+			},
+			"response": []
+		},
+		{
+			"name": "POSЕ Person",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n     \"firstName\": \"Tommy\",\r\n    \"lastName\": \"Lee\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						""
+					]
+				},
+				"description": "Добавить пользователя"
+			},
+			"response": []
+		},
+		{
+			"name": "POST Note to TelBook of Person 6",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n    \"contactName\": \"Pamela\",\r\n    \"telephoneNumber\": \"+19598772514\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/6/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"6",
+						"notes"
+					]
+				},
+				"description": "Добавить запись в телефонную книжку пользователя"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Note to TelBook of Person 6",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n    \"contactName\": \"Pamela\",\r\n    \"telephoneNumber\": \"+18569742315\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/6/notes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"6",
+						"notes",
+						"1"
+					]
+				},
+				"description": "Обновить запись 1 в телефонной книжке пользователя 6"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Note to TelBook of Person 6",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/6/notes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"6",
+						"notes",
+						"1"
+					]
+				},
+				"description": "Удалить запись из телефонной книжки пользователя 6"
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Person 6 (Update)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"firstName\": \"Tom\",\r\n    \"lastName\": \"Lee\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"6"
+					]
+				},
+				"description": "Редактировать пользователя 6"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Person 6",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"6"
+					]
+				},
+				"description": "Удалить пользователя 6"
+			},
+			"response": []
+		}
+	]
+}
