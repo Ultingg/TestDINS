@@ -158,10 +158,10 @@ public class NotesServiceTests {
 
     private Set<Note> getSetOfNotes() {
         Note note = new Note("Eve", "+00000000002");
-        Note note1 = new Note("Sanke", "+00000000009");
+        Note note1 = new Note("Snake", "+00000000009");
         note.setNoteId(1L);
         note1.setNoteId(2L);
-        Set<Note> noteSet = new HashSet();
+        Set<Note> noteSet = new HashSet<>();
         noteSet.add(note);
         noteSet.add(note1);
 
@@ -170,7 +170,7 @@ public class NotesServiceTests {
 
     private List<NoteDTO> getListOfNotesDTO() {
         NoteDTO noteDTO = new NoteDTO(1L, "Eve", "+00000000002");
-        NoteDTO noteDTO2 = new NoteDTO(2L, "Sanke", "+00000000009");
+        NoteDTO noteDTO2 = new NoteDTO(2L, "Snake", "+00000000009");
         return Arrays.asList(noteDTO, noteDTO2);
     }
 

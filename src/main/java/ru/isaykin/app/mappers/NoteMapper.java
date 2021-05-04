@@ -9,9 +9,7 @@ import ru.isaykin.app.entities.Note;
 
 @Mapper
 public interface NoteMapper {
-
     NoteMapper INSTANCE = Mappers.getMapper(NoteMapper.class);
-
 
     @Mappings({
             @Mapping(source = "noteDTO.id", target = "noteId"),

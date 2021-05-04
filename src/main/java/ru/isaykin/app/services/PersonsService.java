@@ -25,7 +25,6 @@ public class PersonsService {
         this.personsRepository = personsRepository;
     }
 
-
     public PersonDTO addPerson(PersonDTO personDTO) {
         Person person = INSTANCE.fromPersonDTOToPerson(personDTO);
         person.setTelephoneBook(new TelephoneBook());

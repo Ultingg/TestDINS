@@ -17,7 +17,6 @@ import java.util.Map;
 
 import static ru.isaykin.app.mappers.NoteMapper.INSTANCE;
 
-@SuppressWarnings("UnnecessaryLocalVariable")
 @Service
 public class NotesService {
 

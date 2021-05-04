@@ -120,6 +120,7 @@ public class PersonControllerTests {
         verify(personsService, times(1)).deletePersonById(1L);
         verify(personsService, times(1)).deletePersonById(anyLong());
     }
+
     @Test
     public void updatePerson_valid_PersonDTO() {
         PersonDTO expectedPersonDTO = new PersonDTO();
@@ -127,13 +128,13 @@ public class PersonControllerTests {
         expectedPersonDTO.setFirstName("Adam");
         expectedPersonDTO.setLastName("Man");
         ResponseEntity<PersonDTO> expectedResponse = new ResponseEntity<>(expectedPersonDTO, OK);
-        when(personsService.updatePersonById(1L,expectedPersonDTO)).thenReturn(expectedPersonDTO);
+        when(personsService.updatePersonById(1L, expectedPersonDTO)).thenReturn(expectedPersonDTO);
 
-        ResponseEntity<PersonDTO> actual = personsController.updatePerson(1L,expectedPersonDTO);
+        ResponseEntity<PersonDTO> actual = personsController.updatePerson(1L, expectedPersonDTO);
 
         assertEquals(expectedResponse, actual);
-        verify(personsService, times(1)).updatePersonById(1L,expectedPersonDTO);
-        verify(personsService, times(1)).updatePersonById(anyLong(),any(PersonDTO.class));
+        verify(personsService, times(1)).updatePersonById(1L, expectedPersonDTO);
+        verify(personsService, times(1)).updatePersonById(anyLong(), any(PersonDTO.class));
     }
 
 }

@@ -10,16 +10,13 @@ import ru.isaykin.app.entities.Person;
 
 @Mapper
 public interface PersonMapper {
-
     PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
-
 
     @Mappings({
             @Mapping(source = "personDTO.id", target = "personId"),
             @Mapping(source = "personDTO.firstName", target = "firstName"),
             @Mapping(source = "personDTO.lastName", target = "lastName")})
     Person fromPersonDTOToPerson(PersonDTO personDTO);
-
 
     @Mappings({
             @Mapping(source = "person.personId", target = "id"),

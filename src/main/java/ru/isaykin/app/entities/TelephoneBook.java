@@ -9,7 +9,6 @@ import java.util.Set;
 
 @Data
 @Table("telephone_books")
-//@NoArgsConstructor
 public class TelephoneBook {
     @Id
     private Long telephoneBookId;

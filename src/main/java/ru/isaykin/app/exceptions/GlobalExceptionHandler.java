@@ -20,11 +20,9 @@ import static org.springframework.http.HttpStatus.*;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-
     @ExceptionHandler(value = NoteNotFoundException.class)
     public ResponseEntity<Object> handleNoteNotFoundException(NoteNotFoundException exception) {
         return getResponseEntityWithBody(NOT_FOUND, exception);
-
     }
 
     private ResponseEntity<Object> getResponseEntityWithBody(HttpStatus status, Exception exception) {

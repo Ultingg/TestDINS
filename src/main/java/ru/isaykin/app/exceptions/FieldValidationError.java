@@ -8,5 +8,4 @@ public class FieldValidationError {
     private String field;
     private Object rejectedValue;
     private String message;
-
 }
