@@ -71,7 +71,7 @@ public class ValidatorTests {
     @Test
     public void contactNameNoteDTO_invalidConstrain() {
         NoteDTO noteDTO = new NoteDTO();
-        noteDTO.setContactName("23123");
+        noteDTO.setContactName("Паша/)1");
         Set<ConstraintViolation<NoteDTO>> violations = validator.validate(noteDTO);
 
         assertFalse(violations.isEmpty());
