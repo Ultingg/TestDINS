@@ -26,7 +26,7 @@ public class ValidatorTests {
     @Test
     public void firstNamePerson_validConstrain() {
         PersonDTO personDTO = new PersonDTO();
-        personDTO.setFirstName("Сергей");
+        personDTO.setFirstName("Jhon");
         Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
 
         assertTrue(violations.isEmpty());
@@ -44,7 +44,7 @@ public class ValidatorTests {
     @Test
     public void lastNamePersonDTO_validConstrain() {
         PersonDTO personDTO = new PersonDTO();
-        personDTO.setLastName("Воронин");
+        personDTO.setLastName("Stone");
         Set<ConstraintViolation<PersonDTO>> violations = validator.validate(personDTO);
 
         assertTrue(violations.isEmpty());
@@ -62,7 +62,7 @@ public class ValidatorTests {
     @Test
     public void contactNameNoteDTO_validConstrain() {
         NoteDTO noteDTO = new NoteDTO();
-        noteDTO.setContactName("Дмитрий");
+        noteDTO.setContactName("Leon");
         Set<ConstraintViolation<NoteDTO>> violations = validator.validate(noteDTO);
 
         assertTrue(violations.isEmpty());
@@ -71,7 +71,7 @@ public class ValidatorTests {
     @Test
     public void contactNameNoteDTO_invalidConstrain() {
         NoteDTO noteDTO = new NoteDTO();
-        noteDTO.setContactName("Паша/)1");
+        noteDTO.setContactName("Par897)");
         Set<ConstraintViolation<NoteDTO>> violations = validator.validate(noteDTO);
 
         assertFalse(violations.isEmpty());
@@ -80,7 +80,7 @@ public class ValidatorTests {
     @Test
     public void telephoneNumberNoteDTO_validConstrain() {
         NoteDTO noteDTO = new NoteDTO();
-        noteDTO.setTelephoneNumber("+79214897899");
+        noteDTO.setTelephoneNumber("+19214897899");
         Set<ConstraintViolation<NoteDTO>> violations = validator.validate(noteDTO);
 
         assertTrue(violations.isEmpty());
@@ -89,7 +89,7 @@ public class ValidatorTests {
     @Test
     public void telephoneNumberNoteDTO_invalidConstrain() {
         NoteDTO noteDTO = new NoteDTO();
-        noteDTO.setTelephoneNumber("23123");
+        noteDTO.setTelephoneNumber("23df2123");
         Set<ConstraintViolation<NoteDTO>> violations = validator.validate(noteDTO);
 
         assertFalse(violations.isEmpty());

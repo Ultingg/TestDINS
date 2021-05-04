@@ -133,7 +133,7 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>libs/</classpathPrefix>
                             <mainClass>
-                                ru.isaykin.app
+                                ru.isaykin.app.Application
                             </mainClass>
                         </manifest>
                     </archive>
