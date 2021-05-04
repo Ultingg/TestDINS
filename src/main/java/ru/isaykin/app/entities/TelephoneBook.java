@@ -6,8 +6,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -23,7 +21,7 @@ public class TelephoneBook {
         this.notes.add(note);
     }
 
-    public TelephoneBook( Set<Note> notes) {
+    public TelephoneBook(Set<Note> notes) {
         this.notes = notes;
     }
 }

@@ -2,7 +2,7 @@ package ru.isaykin.app.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.isaykin.app.DTO.NoteDTO;
+import ru.isaykin.app.dto.NoteDTO;
 import ru.isaykin.app.services.NotesService;
 
 import javax.validation.Valid;
@@ -47,7 +47,7 @@ public class NotesController {
         return new ResponseEntity<>(resultNoteDTO, CREATED);
     }
 
-    @PatchMapping("{personId}/notes/{noteId}")
+    @PutMapping("{personId}/notes/{noteId}")
     public ResponseEntity<NoteDTO> updateNoteInPersonBook(@PathVariable Long personId,
                                                           @PathVariable Long noteId,
                                                           @Valid @RequestBody NoteDTO noteDTO) {
@@ -67,7 +67,9 @@ public class NotesController {
             response.append("Person wasn't deleted. Repeat request, please.");
             result = new ResponseEntity<>(response, BAD_REQUEST);
         } else {
-            response.append("Note id = " + noteId + " was deleted from Person's telephone book.");
+            response.append("Note id = ")
+                    .append(noteId)
+                    .append(" was deleted from Person's telephone book.");
             result = new ResponseEntity<>(response, OK);
         }
         return result;

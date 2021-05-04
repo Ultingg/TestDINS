@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(value = NoteNotFoundException.class)
-    public ResponseEntity<Object>handlerNoteNotFoundException(NoteNotFoundException exception) {
+    public ResponseEntity<Object> handleNoteNotFoundException(NoteNotFoundException exception) {
         return getResponseEntityWithBody(NOT_FOUND, exception);
 
     }
@@ -52,5 +53,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = IncorrectUpdateSemanticsDataAccessException.class)
     public ResponseEntity<Object> handlePersonNotFoundException(IncorrectUpdateSemanticsDataAccessException exception) {
         return getResponseEntityWithBody(BAD_REQUEST, exception);
+    }
+
+    @ExceptionHandler(value = SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<Object> handleDuplicationConstraintException(SQLIntegrityConstraintViolationException exception) {
+        return getResponseEntityWithBody(CONFLICT, exception);
     }
 }

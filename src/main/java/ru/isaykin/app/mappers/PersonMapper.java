@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
-import ru.isaykin.app.DTO.PersonDTO;
+import ru.isaykin.app.dto.PersonDTO;
 import ru.isaykin.app.entities.Person;
 
 @Mapper

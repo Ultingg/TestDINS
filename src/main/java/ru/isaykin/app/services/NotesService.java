@@ -1,7 +1,7 @@
 package ru.isaykin.app.services;
 
 import org.springframework.stereotype.Service;
-import ru.isaykin.app.DTO.NoteDTO;
+import ru.isaykin.app.dto.NoteDTO;
 import ru.isaykin.app.entities.Note;
 import ru.isaykin.app.entities.Person;
 import ru.isaykin.app.exceptions.NoteNotFoundException;
@@ -9,12 +9,12 @@ import ru.isaykin.app.exceptions.PersonNotFoundException;
 import ru.isaykin.app.repositories.NotesRepository;
 import ru.isaykin.app.repositories.PersonsRepository;
 
-import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
 import static ru.isaykin.app.mappers.NoteMapper.INSTANCE;
 
+@SuppressWarnings("UnnecessaryLocalVariable")
 @Service
 public class NotesService {
 
@@ -45,8 +45,8 @@ public class NotesService {
         List<NoteDTO> noteDTOList = new ArrayList<>();
         List<Note> noteList = List.copyOf(person.getTelephoneBook().getNotes());
         Long idNumber = 1L;
-        for (int i = 0; i < noteList.size(); i++) {
-            NoteDTO noteDTO = INSTANCE.fromNoteToNoteDTO(noteList.get(i));
+        for (Note note : noteList) {
+            NoteDTO noteDTO = INSTANCE.fromNoteToNoteDTO(note);
             noteDTO.setId(idNumber);
             noteDTOList.add(noteDTO);
             idNumber++;
@@ -59,7 +59,7 @@ public class NotesService {
         String telephone = addPlusToTelephoneNumber(telephoneNumber);
         NoteDTO noteDTO = noteDTOList.stream()
                 .filter(noteDTO1 -> noteDTO1.getTelephoneNumber().equals(telephone))
-                .findAny().orElseThrow(()->new NoteNotFoundException("Note not found. Wrong id."));
+                .findAny().orElseThrow(() -> new NoteNotFoundException("Note not found. Wrong id."));
         return noteDTO;
     }
 
@@ -103,7 +103,8 @@ public class NotesService {
     private NoteDTO getNoteDTOByPersonBookNoteId(Long personId, Long noteDTOId) {
         List<NoteDTO> noteDTOList = getListOfNoteDTOById(personId);
         if (noteDTOList.size() < noteDTOId) throw new NoteNotFoundException("Note not found. Wrong id.");
-        return noteDTOList.get(noteDTOId.intValue() - 1);
+        NoteDTO noteDTOResult = noteDTOList.get(noteDTOId.intValue() - 1);
+        return noteDTOResult;
     }
 
     public NoteDTO updateNoteInPersonBook(Long personId, Long noteDTOId, String contactName, String telephoneNumber) {

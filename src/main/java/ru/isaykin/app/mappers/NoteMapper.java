@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
-import ru.isaykin.app.DTO.NoteDTO;
+import ru.isaykin.app.dto.NoteDTO;
 import ru.isaykin.app.entities.Note;
 
 @Mapper

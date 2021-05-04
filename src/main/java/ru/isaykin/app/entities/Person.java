@@ -16,7 +16,7 @@ public class Person {
     @MappedCollection(idColumn = "person_id")
     private TelephoneBook telephoneBook;
 
-    public Person( String firstName, String lastName, TelephoneBook telephoneBook) {
+    public Person(String firstName, String lastName, TelephoneBook telephoneBook) {
 
         this.firstName = firstName;
         this.lastName = lastName;

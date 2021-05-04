@@ -13,7 +13,4 @@ public interface PersonsRepository extends CrudRepository<Person, Long> {
     Optional<Person> findByFirstName(String firstName);
 
 
-
-
-
 }

@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import ru.isaykin.app.DTO.NoteDTO;
-import ru.isaykin.app.DTO.PersonDTO;
+import ru.isaykin.app.dto.NoteDTO;
+import ru.isaykin.app.dto.PersonDTO;
 import ru.isaykin.app.entities.Note;
 import ru.isaykin.app.entities.Person;
 import ru.isaykin.app.entities.TelephoneBook;

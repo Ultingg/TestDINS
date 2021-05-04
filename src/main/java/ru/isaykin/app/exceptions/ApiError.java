@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("SameParameterValue")
 @Data
 public class ApiError {
 

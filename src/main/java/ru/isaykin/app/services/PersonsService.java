@@ -1,7 +1,7 @@
 package ru.isaykin.app.services;
 
 import org.springframework.stereotype.Service;
-import ru.isaykin.app.DTO.PersonDTO;
+import ru.isaykin.app.dto.PersonDTO;
 import ru.isaykin.app.entities.Person;
 import ru.isaykin.app.entities.TelephoneBook;
 import ru.isaykin.app.exceptions.PersonNotFoundException;
@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import static ru.isaykin.app.mappers.PersonMapper.INSTANCE;
 
+@SuppressWarnings("ALL")
 @Service
 public class PersonsService {
 
@@ -27,8 +28,8 @@ public class PersonsService {
         Person person = INSTANCE.fromPersonDTOToPerson(personDTO);
         person.setTelephoneBook(new TelephoneBook());
         person = personsRepository.save(person);
-        personDTO = INSTANCE.fromPersonToPersonDTO(person);
-        return personDTO;
+        PersonDTO result = INSTANCE.fromPersonToPersonDTO(person);
+        return result;
     }
 
     public PersonDTO getById(Long id) {
@@ -42,11 +43,11 @@ public class PersonsService {
     public List<PersonDTO> getList() {
         List<Person> personList = new ArrayList<>();
         personsRepository.findAll().iterator().forEachRemaining(personList::add);
-        List<PersonDTO> personDTOList = personList
+        List<PersonDTO> personDTOListResult = personList
                 .stream()
                 .map(INSTANCE::fromPersonToPersonDTO)
                 .collect(Collectors.toList());
-        return personDTOList;
+        return personDTOListResult;
     }
 
     public Long deleteById(Long id) {
@@ -75,7 +76,7 @@ public class PersonsService {
     public PersonDTO getByName(String firstName) {
         Person person = personsRepository.findByFirstName(firstName)
                 .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
-        PersonDTO personDTO = INSTANCE.fromPersonToPersonDTO(person);
-        return personDTO;
+        PersonDTO personDTOResult = INSTANCE.fromPersonToPersonDTO(person);
+        return personDTOResult;
     }
 }
