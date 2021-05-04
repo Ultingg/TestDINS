@@ -32,7 +32,7 @@ public class PersonsService {
         return result;
     }
 
-    public PersonDTO getById(Long id) {
+    public PersonDTO getPersonById(Long id) {
         Person person = personsRepository
                 .findById(id)
                 .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));

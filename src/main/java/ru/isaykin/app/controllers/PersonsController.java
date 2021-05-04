@@ -40,7 +40,7 @@ public class PersonsController {
 
     @GetMapping("{id}")
     public ResponseEntity<PersonDTO> getPersonById(@PathVariable Long id) {
-        PersonDTO personResult = personsService.getById(id);
+        PersonDTO personResult = personsService.getPersonById(id);
         return new ResponseEntity<>(personResult, OK);
     }
 
