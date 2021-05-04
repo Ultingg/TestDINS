@@ -1,5 +1,6 @@
 package ru.isaykin.app.services;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Service;
 import ru.isaykin.app.dto.NoteDTO;
 import ru.isaykin.app.entities.Note;
@@ -39,7 +40,7 @@ public class NotesService {
             result = noteList.get(noteId.intValue() - 1);
         } catch (IndexOutOfBoundsException e) {
             throw new NoteNotFoundException("Note not found. Wrong id.");
-        }catch (NullPointerException exception){
+        } catch (NullPointerException exception) {
             throw new InvalidNoteException("You send invalid person for update.");
         }
         return result;
@@ -68,10 +69,8 @@ public class NotesService {
     }
 
     public NoteDTO addNoteToPersonById(Long personId, NoteDTO noteDTO) {
-        Person person = personsRepository
-                .findById(personId)
-                .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
-        if(noteDTO == null) throw new InvalidNoteException("You send invalid person for update.");
+        if (!personsRepository.existsById(personId)) throw new PersonNotFoundException("Person not found. Wrong id.");
+        if (noteDTO == null) throw new InvalidNoteException("You send invalid person for update.");
         Note note = INSTANCE.fromNoteDTOToNote(noteDTO);
         notesRepository.addNoteToPersonById(personId, note.getContactName(), note.getTelephoneNumber());
         NoteDTO result = getLastNoteOfPerson(personId);
@@ -105,7 +104,8 @@ public class NotesService {
 
     private NoteDTO getNoteDTOByPersonBookNoteId(Long personId, Long noteDTOId) {
         List<NoteDTO> noteDTOList = getListOfNoteDTOById(personId);
-        if (noteDTOList.size() < noteDTOId) throw new NoteNotFoundException("Note not found. Wrong id.");
+        if (noteDTOId == null || noteDTOList.size() < noteDTOId)
+            throw new NoteNotFoundException("Note not found. Wrong id.");
         NoteDTO noteDTOResult = noteDTOList.get(noteDTOId.intValue() - 1);
         return noteDTOResult;
     }
@@ -131,4 +131,5 @@ public class NotesService {
     private String addPlusToTelephoneNumber(String telephoneNumber) {
         return telephoneNumber.replace(" ", "+");
     }
+
 }

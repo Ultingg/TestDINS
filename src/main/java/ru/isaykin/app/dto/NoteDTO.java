@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Data
 @Builder
@@ -32,5 +33,19 @@ public class NoteDTO {
         this.id = id;
         this.contactName = contactName;
         this.telephoneNumber = telephoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NoteDTO noteDTO = (NoteDTO) o;
+        return Objects.equals(id, noteDTO.id) &&
+                Objects.equals(contactName, noteDTO.contactName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, contactName);
     }
 }
