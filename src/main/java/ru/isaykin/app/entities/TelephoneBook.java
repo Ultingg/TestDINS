@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Data
 @Table("telephone_books")
-@NoArgsConstructor
+//@NoArgsConstructor
 public class TelephoneBook {
     @Id
     private Long telephoneBookId;
@@ -19,6 +19,10 @@ public class TelephoneBook {
 
     public void addNote(Note note) {
         this.notes.add(note);
+    }
+
+    public TelephoneBook() {
+        this.notes = Set.of();
     }
 
     public TelephoneBook(Set<Note> notes) {

@@ -4,13 +4,16 @@ import org.springframework.stereotype.Service;
 import ru.isaykin.app.dto.NoteDTO;
 import ru.isaykin.app.entities.Note;
 import ru.isaykin.app.entities.Person;
+import ru.isaykin.app.exceptions.InvalidNoteException;
 import ru.isaykin.app.exceptions.NoteNotFoundException;
 import ru.isaykin.app.exceptions.PersonNotFoundException;
 import ru.isaykin.app.repositories.NotesRepository;
 import ru.isaykin.app.repositories.PersonsRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static ru.isaykin.app.mappers.NoteMapper.INSTANCE;
 
@@ -33,10 +36,11 @@ public class NotesService {
                 .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
         List<NoteDTO> noteList = getListOfNotesFromTelephoneBook(person);
         try {
-
             result = noteList.get(noteId.intValue() - 1);
-        } catch (IndexOutOfBoundsException exception) {
+        } catch (IndexOutOfBoundsException e) {
             throw new NoteNotFoundException("Note not found. Wrong id.");
+        }catch (NullPointerException exception){
+            throw new InvalidNoteException("You send invalid person for update.");
         }
         return result;
     }
@@ -67,6 +71,7 @@ public class NotesService {
         Person person = personsRepository
                 .findById(personId)
                 .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
+        if(noteDTO == null) throw new InvalidNoteException("You send invalid person for update.");
         Note note = INSTANCE.fromNoteDTOToNote(noteDTO);
         notesRepository.addNoteToPersonById(personId, note.getContactName(), note.getTelephoneNumber());
         NoteDTO result = getLastNoteOfPerson(personId);
@@ -87,17 +92,15 @@ public class NotesService {
         return resultList;
     }
 
-    public Long deleteNoteById(Long personId, Long noteDTOId) {
+    public Map<String, Object> deleteNoteByIdFromPersonBook(Long personId, Long noteDTOId) {
+        Map<String, Object> resultMap = new HashMap<>();
         NoteDTO noteDTO = getNoteDTOByPersonBookNoteId(personId, noteDTOId);
-
         Note noteToDelete = notesRepository.findByTelephoneNumber(noteDTO.getTelephoneNumber())
                 .orElseThrow(() -> new NoteNotFoundException("Note not found. Wrong id."));
-        Long noteId = noteToDelete.getNoteId();
         notesRepository.delete(noteToDelete);
-
-        Long result = noteDTOId;
-        if (notesRepository.existsById(noteId)) result = 0L;
-        return result;
+        resultMap.put("Message: ", "Note was deleted");
+        resultMap.put("Note: ", noteDTO);
+        return resultMap;
     }
 
     private NoteDTO getNoteDTOByPersonBookNoteId(Long personId, Long noteDTOId) {

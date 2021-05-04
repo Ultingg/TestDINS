@@ -4,16 +4,15 @@ import org.springframework.stereotype.Service;
 import ru.isaykin.app.dto.PersonDTO;
 import ru.isaykin.app.entities.Person;
 import ru.isaykin.app.entities.TelephoneBook;
+import ru.isaykin.app.exceptions.InvalidPersonException;
 import ru.isaykin.app.exceptions.PersonNotFoundException;
 import ru.isaykin.app.repositories.PersonsRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static ru.isaykin.app.mappers.PersonMapper.INSTANCE;
 
-@SuppressWarnings("ALL")
 @Service
 public class PersonsService {
 
@@ -50,32 +49,33 @@ public class PersonsService {
         return personDTOListResult;
     }
 
-    public Long deleteById(Long id) {
+    public Map<String, Object> deletePersonById(Long id) {
+        Map<String, Object> resultMap = new HashMap<>();
         Person personToDelete = personsRepository
                 .findById(id)
                 .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
-        Long result = personToDelete.getPersonId();
         personsRepository.deleteById(id);
-        if (personsRepository.findById(id).isPresent()) result = 0L;
-        return result;
+        PersonDTO deletedPersonDTO = INSTANCE.fromPersonToPersonDTO(personToDelete);
+        resultMap.put("Message:", "Person was deleted.");
+        resultMap.put("Person:", deletedPersonDTO);
+        return resultMap;
     }
 
-    public PersonDTO updateById(Long id, PersonDTO personDTO) {
+    public PersonDTO updatePersonById(Long id, PersonDTO personDTO) {
         Person person = personsRepository
                 .findById(id)
                 .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
+        if (personDTO == null) throw new InvalidPersonException("You send invalid person for update.");
         if (personDTO.getFirstName() != null) person.setFirstName(personDTO.getFirstName());
         if (personDTO.getLastName() != null) person.setLastName(personDTO.getLastName());
         person = personsRepository.save(person);
         PersonDTO result = INSTANCE.fromPersonToPersonDTO(person);
         return result;
-
-
     }
 
-    public PersonDTO getByName(String firstName) {
+    public PersonDTO getPersonByName(String firstName) {
         Person person = personsRepository.findByFirstName(firstName)
-                .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
+                .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong first name."));
         PersonDTO personDTOResult = INSTANCE.fromPersonToPersonDTO(person);
         return personDTOResult;
     }

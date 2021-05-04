@@ -23,5 +23,9 @@ public class Person {
         this.telephoneBook = telephoneBook;
     }
 
+    public void addNote(Note note) {
+        this.telephoneBook.addNote(note);
+    }
+
 
 }

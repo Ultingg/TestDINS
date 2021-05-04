@@ -7,6 +7,7 @@ import ru.isaykin.app.services.PersonsService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -33,7 +34,7 @@ public class PersonsController {
 
     @GetMapping("person")
     public ResponseEntity<PersonDTO> getPersonByName(@RequestParam String firstName) {
-        PersonDTO personResult = personsService.getByName(firstName);
+        PersonDTO personResult = personsService.getPersonByName(firstName);
         return new ResponseEntity<>(personResult, OK);
 
     }
@@ -45,24 +46,15 @@ public class PersonsController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<StringBuilder> deleteById(@PathVariable Long id) {
-        ResponseEntity<StringBuilder> result;
-        StringBuilder response = new StringBuilder();
-        Long resultLong = personsService.deleteById(id);
-        if (resultLong == 0L) {
-            response.append("Person wasn't deleted. Repeat request, please.");
-            result = new ResponseEntity<>(response, BAD_REQUEST);
-        } else {
-            response.append("Person id = ").append(resultLong).append(" was deleted.");
-            result = new ResponseEntity<>(response, OK);
-        }
-        return result;
+    public ResponseEntity<Map<String,Object>> deletePersonById(@PathVariable Long id) {
+        Map<String, Object> resultMap = personsService.deletePersonById(id);
+        return new ResponseEntity<>(resultMap,OK);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id,
                                                   @Valid @RequestBody PersonDTO personDTO) {
-        PersonDTO UpdatedPersonDTO = personsService.updateById(id, personDTO);
+        PersonDTO UpdatedPersonDTO = personsService.updatePersonById(id, personDTO);
         return new ResponseEntity<>(UpdatedPersonDTO, OK);
     }
 

@@ -7,6 +7,8 @@ import ru.isaykin.app.entities.TelephoneBook;
 import ru.isaykin.app.mappers.NoteMapper;
 import ru.isaykin.app.mappers.PersonMapper;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -14,7 +16,7 @@ public class MapperTests {
 
     @Test
     void fromPersonToPersonDTO() {
-        Person person = new Person("Adam","Man", new TelephoneBook());
+        Person person = new Person("Adam","Man", new TelephoneBook(Set.of()));
 
         PersonDTO personDTO = PersonMapper.INSTANCE.fromPersonToPersonDTO(person);
 

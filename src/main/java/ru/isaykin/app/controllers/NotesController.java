@@ -7,8 +7,10 @@ import ru.isaykin.app.services.NotesService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("persons")
@@ -58,20 +60,10 @@ public class NotesController {
     }
 
     @DeleteMapping("{personId}/notes/{noteId}")
-    public ResponseEntity<StringBuilder> deleteNoteFromPersonBook(@PathVariable Long personId,
-                                                                  @PathVariable Long noteId) {
-        ResponseEntity<StringBuilder> result;
-        StringBuilder response = new StringBuilder();
-        Long resultLong = notesService.deleteNoteById(personId, noteId);
-        if (resultLong == 0L) {
-            response.append("Person wasn't deleted. Repeat request, please.");
-            result = new ResponseEntity<>(response, BAD_REQUEST);
-        } else {
-            response.append("Note id = ")
-                    .append(noteId)
-                    .append(" was deleted from Person's telephone book.");
-            result = new ResponseEntity<>(response, OK);
-        }
-        return result;
+    public ResponseEntity<Map<String, Object>> deleteNoteFromPersonBook(@PathVariable Long personId,
+                                                                        @PathVariable Long noteId) {
+        Map<String, Object> resultMap = notesService.deleteNoteByIdFromPersonBook(personId, noteId);
+        return new ResponseEntity<>(resultMap, OK);
     }
+
 }
