@@ -49,7 +49,7 @@ public class NotesService {
         List<Note> noteList = List.copyOf(person.getTelephoneBook().getNotes());
         Long idNumber = 1L;
         for (Note note : noteList) {
-            NoteDTO noteDTO = INSTANCE.fromNoteToNoteDTO(note);
+            NoteDTO noteDTO = INSTANCE.noteToNoteDTO(note);
             noteDTO.setId(idNumber);
             noteDTOList.add(noteDTO);
             idNumber++;
@@ -69,7 +69,7 @@ public class NotesService {
     public NoteDTO addNoteToPersonById(Long personId, NoteDTO noteDTO) {
         if (!personsRepository.existsById(personId)) throw new PersonNotFoundException("Person not found. Wrong id.");
         if (noteDTO == null) throw new InvalidNoteException("You send invalid person for update.");
-        Note note = INSTANCE.fromNoteDTOToNote(noteDTO);
+        Note note = INSTANCE.noteDTOToNote(noteDTO);
         notesRepository.addNoteToPersonById(personId, note.getContactName(), note.getTelephoneNumber());
         NoteDTO result = getLastNoteOfPerson(personId);
         return result;
@@ -121,7 +121,7 @@ public class NotesService {
         }
         noteToUpdate = notesRepository.save(noteToUpdate);
 
-        noteDTO = INSTANCE.fromNoteToNoteDTO(noteToUpdate);
+        noteDTO = INSTANCE.noteToNoteDTO(noteToUpdate);
         noteDTO.setId(noteDTOId);
         return noteDTO;
     }

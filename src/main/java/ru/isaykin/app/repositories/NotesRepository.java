@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface NotesRepository extends CrudRepository<Note, Long> {
+
     @Modifying
     @Query("INSERT INTO notes (telephone_book_id, contact_name, telephone_number) VALUES (:personId, :contactName,:telephoneNumber);")
     void addNoteToPersonById(Long personId, String contactName, String telephoneNumber);

@@ -16,11 +16,11 @@ public interface PersonMapper {
             @Mapping(source = "personDTO.id", target = "personId"),
             @Mapping(source = "personDTO.firstName", target = "firstName"),
             @Mapping(source = "personDTO.lastName", target = "lastName")})
-    Person fromPersonDTOToPerson(PersonDTO personDTO);
+    Person personDTOToPerson(PersonDTO personDTO);
 
     @Mappings({
             @Mapping(source = "person.personId", target = "id"),
             @Mapping(source = "person.firstName", target = "firstName"),
             @Mapping(source = "person.lastName", target = "lastName")})
-    PersonDTO fromPersonToPersonDTO(Person person);
+    PersonDTO personToPersonDTO(Person person);
 }

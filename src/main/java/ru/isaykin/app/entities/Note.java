@@ -9,6 +9,7 @@ import java.util.Objects;
 @Data
 @Table("notes")
 public class Note {
+
     @Id
     private Long noteId;
     private String contactName;
@@ -21,8 +22,8 @@ public class Note {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {return true;}
+        if (o == null || getClass() != o.getClass()){ return false;}
         Note note = (Note) o;
         return Objects.equals(noteId, note.noteId) &&
                 Objects.equals(contactName, note.contactName);

@@ -18,7 +18,7 @@ public class MapperTests {
     void fromPersonToPersonDTO() {
         Person person = new Person("Adam", "Man", new TelephoneBook(Set.of()));
 
-        PersonDTO personDTO = PersonMapper.INSTANCE.fromPersonToPersonDTO(person);
+        PersonDTO personDTO = PersonMapper.INSTANCE.personToPersonDTO(person);
 
         assertEquals("Adam", personDTO.getFirstName());
         assertEquals("Man", personDTO.getLastName());
@@ -30,7 +30,7 @@ public class MapperTests {
         personDTO.setFirstName("Eve");
         personDTO.setLastName("Woman");
 
-        Person person = PersonMapper.INSTANCE.fromPersonDTOToPerson(personDTO);
+        Person person = PersonMapper.INSTANCE.personDTOToPerson(personDTO);
 
         assertEquals("Eve", person.getFirstName());
         assertEquals("Woman", person.getLastName());
@@ -40,7 +40,7 @@ public class MapperTests {
     void fromNoteToNoteDTO() {
         Note note = new Note("Iosif", "+74951234567");
 
-        NoteDTO noteDTO = NoteMapper.INSTANCE.fromNoteToNoteDTO(note);
+        NoteDTO noteDTO = NoteMapper.INSTANCE.noteToNoteDTO(note);
 
         assertEquals("Iosif", noteDTO.getContactName());
         assertEquals("+74951234567", noteDTO.getTelephoneNumber());
@@ -54,7 +54,7 @@ public class MapperTests {
                 .build();
 
 
-        Note note = NoteMapper.INSTANCE.fromNoteDTOToNote(noteDTO);
+        Note note = NoteMapper.INSTANCE.noteDTOToNote(noteDTO);
 
         assertEquals("Nikita", note.getContactName());
         assertEquals("+74959874561", note.getTelephoneNumber());

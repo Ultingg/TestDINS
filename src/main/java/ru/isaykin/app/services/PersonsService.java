@@ -26,10 +26,10 @@ public class PersonsService {
     }
 
     public PersonDTO addPerson(PersonDTO personDTO) {
-        Person person = INSTANCE.fromPersonDTOToPerson(personDTO);
+        Person person = INSTANCE.personDTOToPerson(personDTO);
         person.setTelephoneBook(new TelephoneBook());
         person = personsRepository.save(person);
-        PersonDTO result = INSTANCE.fromPersonToPersonDTO(person);
+        PersonDTO result = INSTANCE.personToPersonDTO(person);
         return result;
     }
 
@@ -37,7 +37,7 @@ public class PersonsService {
         Person person = personsRepository
                 .findById(id)
                 .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
-        PersonDTO result = INSTANCE.fromPersonToPersonDTO(person);
+        PersonDTO result = INSTANCE.personToPersonDTO(person);
         return result;
     }
 
@@ -46,7 +46,7 @@ public class PersonsService {
         personsRepository.findAll().iterator().forEachRemaining(personList::add);
         List<PersonDTO> personDTOListResult = personList
                 .stream()
-                .map(INSTANCE::fromPersonToPersonDTO)
+                .map(INSTANCE::personToPersonDTO)
                 .collect(Collectors.toList());
         return personDTOListResult;
     }
@@ -57,7 +57,7 @@ public class PersonsService {
                 .findById(id)
                 .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong id."));
         personsRepository.deleteById(id);
-        PersonDTO deletedPersonDTO = INSTANCE.fromPersonToPersonDTO(personToDelete);
+        PersonDTO deletedPersonDTO = INSTANCE.personToPersonDTO(personToDelete);
         resultMap.put("Message:", "Person was deleted.");
         resultMap.put("Person:", deletedPersonDTO);
         return resultMap;
@@ -71,14 +71,14 @@ public class PersonsService {
         if (personDTO.getFirstName() != null) person.setFirstName(personDTO.getFirstName());
         if (personDTO.getLastName() != null) person.setLastName(personDTO.getLastName());
         person = personsRepository.save(person);
-        PersonDTO result = INSTANCE.fromPersonToPersonDTO(person);
+        PersonDTO result = INSTANCE.personToPersonDTO(person);
         return result;
     }
 
     public PersonDTO getPersonByName(String firstName) {
         Person person = personsRepository.findByFirstName(firstName)
                 .orElseThrow(() -> new PersonNotFoundException("Person not found. Wrong first name."));
-        PersonDTO personDTOResult = INSTANCE.fromPersonToPersonDTO(person);
+        PersonDTO personDTOResult = INSTANCE.personToPersonDTO(person);
         return personDTOResult;
     }
 }

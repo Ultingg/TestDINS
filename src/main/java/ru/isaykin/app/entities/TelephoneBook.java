@@ -10,8 +10,10 @@ import java.util.Set;
 @Data
 @Table("telephone_books")
 public class TelephoneBook {
+
     @Id
     private Long telephoneBookId;
+
     @MappedCollection(idColumn = "telephone_book_id")
     private Set<Note> notes;
 
